@@ -1,0 +1,39 @@
+@model IEnumerable<Doctor>
+@{
+    ViewData["Title"] = "Doctors";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2><i class="fa-solid fa-user-doctor"></i> Doctors</h2>
+    <a class="btn btn-success" asp-action="Create"><i class="fa-solid fa-plus"></i> Add Doctor</a>
+</div>
+
+<form method="get" class="d-flex mb-3" style="max-width:350px;">
+    <input type="text" name="searchString" value="@ViewBag.CurrentFilter" class="form-control me-2" placeholder="Search by name or specialization" />
+    <button type="submit" class="btn btn-outline-primary">Search</button>
+</form>
+
+<div class="row g-3">
+@foreach (var doc in Model)
+{
+    <div class="col-md-4">
+        <div class="card p-3 h-100">
+            <h5><i class="fa-solid fa-user-doctor text-success"></i> @doc.FullName</h5>
+            <p class="mb-1"><strong>Specialization:</strong> @doc.Specialization</p>
+            <p class="mb-1"><strong>Experience:</strong> @doc.ExperienceYears yrs</p>
+            <p class="mb-1"><strong>Phone:</strong> @doc.Phone</p>
+            <p class="mb-2"><strong>Available:</strong> @doc.AvailableFrom - @doc.AvailableTo</p>
+            <div>
+                <a class="btn btn-sm btn-info text-white" asp-action="Details" asp-route-id="@doc.Id"><i class="fa-solid fa-eye"></i></a>
+                <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@doc.Id"><i class="fa-solid fa-pen"></i></a>
+                <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@doc.Id"><i class="fa-solid fa-trash"></i></a>
+            </div>
+        </div>
+    </div>
+}
+</div>
+@if (!Model.Any())
+{
+    <p class="text-muted text-center mt-3">No doctors found.</p>
+}
+

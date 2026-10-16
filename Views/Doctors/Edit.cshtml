@@ -1,0 +1,66 @@
+@model Doctor
+@{
+    ViewData["Title"] = "Edit Doctor";
+}
+
+<h2><i class="fa-solid fa-user-pen"></i> Edit Doctor</h2>
+
+<div class="card p-4 mt-3" style="max-width:700px;">
+    <form asp-action="Edit" method="post">
+        <input type="hidden" asp-for="Id" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="mb-3">
+            <label asp-for="FullName" class="form-label"></label>
+            <input asp-for="FullName" class="form-control" />
+        </div>
+          <div class="mb-3">
+            <label asp-for="Specialization" class="form-label"></label>
+            <select asp-for="Specialization" class="form-select">
+                <option value="">-- Select --</option>
+                <option>General Physician</option>
+                <option>Cardiologist</option>
+                <option>Dermatologist</option>
+                <option>Neurologist</option>
+                <option>Orthopaedics</option>
+                <option>Paediatrics</option>
+                <option>Gynaecologist</option>
+                <option>Psychiatrist</option>
+                <option>Gastroenterologist</option>
+                <option>Endocrinologist</option>
+            </select>
+            <span asp-validation-for="Specialization" class="text-danger"></span>
+          </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label asp-for="Phone" class="form-label"></label>
+                <input asp-for="Phone" class="form-control" />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label asp-for="Email" class="form-label"></label>
+                <input asp-for="Email" class="form-control" />
+            </div>
+        </div>
+        <div class="mb-3">
+            <label asp-for="ExperienceYears" class="form-label"></label>
+            <input asp-for="ExperienceYears" class="form-control" />
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label asp-for="AvailableFrom" class="form-label"></label>
+                <input asp-for="AvailableFrom" class="form-control" />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label asp-for="AvailableTo" class="form-label"></label>
+                <input asp-for="AvailableTo" class="form-control" />
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-success">Save Changes</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

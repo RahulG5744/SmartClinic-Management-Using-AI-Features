@@ -1,0 +1,41 @@
+ @{
+    ViewData["Title"] = "Home";
+}
+
+<div class="hero text-center mb-4">
+    <h1 class="display-6 fw-bold"><i class="fa-solid fa-hospital"></i> SmartClinicSystem</h1>
+    <p class="lead">A complete Hospital Management System — manage patients, doctors, and appointments, with an AI Symptom Assistant to guide patients.</p>
+    <a class="btn btn-light fw-bold me-2" asp-controller="Appointments" asp-action="Create">Book an Appointment</a>
+    <a class="btn btn-outline-light fw-bold" asp-controller="Home" asp-action="Dashboard">Admin Dashboard</a>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-4">
+        <div class="card p-4 h-100 text-center">
+            <i class="fa-solid fa-user-injured fa-2x mb-3 text-primary"></i>
+            <h5>Patient Management</h5>
+            <p class="text-muted">Register patients and maintain their medical records digitally.</p>
+            <a class="btn btn-sm btn-primary mt-auto" asp-controller="Patients" asp-action="Index">Manage Patients</a>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-4 h-100 text-center">
+            <i class="fa-solid fa-user-doctor fa-2x mb-3 text-success"></i>
+            <h5>Doctor Management</h5>
+            <p class="text-muted">Maintain doctor profiles, specializations, and availability.</p>
+            <a class="btn btn-sm btn-success mt-auto" asp-controller="Doctors" asp-action="Index">Manage Doctors</a>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-4 h-100 text-center">
+            <i class="fa-solid fa-calendar-check fa-2x mb-3 text-warning"></i>
+            <h5>Appointments</h5>
+            <p class="text-muted">Book, track, and manage patient-doctor appointments.</p>
+            <a class="btn btn-sm btn-warning mt-auto" asp-controller="Appointments" asp-action="Index">Manage Appointments</a>
+        </div>
+    </div>
+</div>
+
+<div class="alert alert-info mt-4">
+    <i class="fa-solid fa-robot"></i> Try the <strong>AI Symptom Assistant</strong> — click the chat icon in the bottom-right corner for basic health guidance.
+</div> 

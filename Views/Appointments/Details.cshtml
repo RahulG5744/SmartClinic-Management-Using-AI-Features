@@ -1,0 +1,42 @@
+@model Appointment
+@{
+    ViewData["Title"] = "Appointment Details";
+}
+
+<h2><i class="fa-solid fa-id-card"></i> Appointment Details</h2>
+
+<div class="card p-4 mt-3" style="max-width:700px;">
+    <dl class="row">
+        <dt class="col-sm-4">Patient</dt>
+        <dd class="col-sm-8">@Model.Patient?.FullName</dd>
+        <dt class="col-sm-4">Doctor</dt>
+        <dd class="col-sm-8">@Model.Doctor?.FullName (@Model.Doctor?.Specialization)</dd>
+        <dt class="col-sm-4">Date</dt>
+        <dd class="col-sm-8">@Model.AppointmentDate.ToShortDateString()</dd>
+        <dt class="col-sm-4">Time</dt>
+        <dd class="col-sm-8">@Model.AppointmentTime</dd>
+        <dt class="col-sm-4">Reason</dt>
+        <dd class="col-sm-8">@Model.Reason</dd>
+        <dt class="col-sm-4">Status</dt>
+        <dd class="col-sm-8"><span class="badge bg-secondary">@Model.Status</span></dd>
+        <dt class="col-sm-4">Booked On</dt>
+        <dd class="col-sm-8">@Model.CreatedOn.ToString("dd MMM yyyy, hh:mm tt")</dd>
+    </dl>
+    @if (Model.Status == AppointmentStatus.Completed)
+    {
+        if (Model.Prescription == null)
+        {
+            <a asp-controller="Prescriptions" asp-action="Create" asp-route-appointmentId="@Model.Id" class="btn btn-success mt-3">
+                <i class="fa-solid fa-file-medical"></i> Add Prescription
+            </a>
+        }
+        else
+        {
+            <a asp-controller="Prescriptions" asp-action="Edit" asp-route-id="@Model.Prescription.Id" class="btn btn-info text-white mt-3">
+                <i class="fa-solid fa-file-pen"></i> View / Edit Prescription
+            </a>
+        }
+    }
+
+    <a asp-action="Index" class="btn btn-secondary mt-3">Back to List</a>
+</div>

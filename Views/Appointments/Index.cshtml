@@ -1,0 +1,59 @@
+@model IEnumerable<Appointment>
+@{
+    ViewData["Title"] = "Appointments";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2><i class="fa-solid fa-calendar-check"></i> Appointments</h2>
+    <a class="btn btn-warning" asp-action="Create"><i class="fa-solid fa-plus"></i> Book Appointment</a>
+</div>
+
+<div class="mb-3">
+    <div class="btn-group">
+        <a class="btn btn-sm btn-outline-secondary @(ViewBag.StatusFilter == null ? "active" : "")" asp-action="Index">All</a>
+        <a class="btn btn-sm btn-outline-secondary @(ViewBag.StatusFilter?.ToString() == "Pending" ? "active" : "")" asp-action="Index" asp-route-statusFilter="Pending">Pending</a>
+        <a class="btn btn-sm btn-outline-secondary @(ViewBag.StatusFilter?.ToString() == "Confirmed" ? "active" : "")" asp-action="Index" asp-route-statusFilter="Confirmed">Confirmed</a>
+        <a class="btn btn-sm btn-outline-secondary @(ViewBag.StatusFilter?.ToString() == "Completed" ? "active" : "")" asp-action="Index" asp-route-statusFilter="Completed">Completed</a>
+        <a class="btn btn-sm btn-outline-secondary @(ViewBag.StatusFilter?.ToString() == "Cancelled" ? "active" : "")" asp-action="Index" asp-route-statusFilter="Cancelled">Cancelled</a>
+    </div>
+</div>
+
+<div class="card p-3">
+    <table class="table table-hover align-middle">
+        <thead>
+            <tr>
+                <th>Patient</th>
+                <th>Doctor</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Patient?.FullName</td>
+                <td>@item.Doctor?.FullName</td>
+                <td>@item.AppointmentDate.ToShortDateString()</td>
+                <td>@item.AppointmentTime</td>
+                <td>
+                    <span class="badge bg-@(item.Status == AppointmentStatus.Confirmed ? "success" : item.Status == AppointmentStatus.Cancelled ? "danger" : item.Status == AppointmentStatus.Completed ? "primary" : "secondary")">
+                        @item.Status
+                    </span>
+                </td>
+                <td class="text-end">
+                    <a class="btn btn-sm btn-info text-white" asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-eye"></i></a>
+                    <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen"></i></a>
+                    <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash"></i></a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    @if (!Model.Any())
+    {
+        <p class="text-muted text-center mb-0">No appointments found.</p>
+    }
+</div>

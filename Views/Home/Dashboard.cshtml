@@ -1,0 +1,94 @@
+@using SmartClinicSystem.Models
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    var recent = ViewBag.RecentAppointments as List<Appointment>;
+}
+
+<h2 class="mb-4"><i class="fa-solid fa-gauge"></i> Admin Dashboard</h2>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="stat-card bg-grad-blue"><p>Total Patients</p><h2>@ViewBag.TotalPatients</h2></div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card bg-grad-green"><p>Total Doctors</p><h2>@ViewBag.TotalDoctors</h2></div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card bg-grad-orange"><p>Total Appointments</p><h2>@ViewBag.TotalAppointments</h2></div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card bg-grad-red"><p>Pending Appointments</p><h2>@ViewBag.PendingAppointments</h2></div>
+    </div>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-6">
+        <div class="card p-3">
+            <h6 class="mb-3">Appointments by Status</h6>
+            <canvas id="statusChart" height="220"></canvas>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card p-3">
+            <h6 class="mb-3">Appointments Booked: Last 7 Days</h6>
+            <canvas id="dailyChart" height="220"></canvas>
+        </div>
+    </div>
+</div>
+
+<div class="card p-3">
+    <h5 class="mb-3">Recent Appointments</h5>
+    <table class="table table-hover align-middle">
+        <thead>
+            <tr><th>Patient</th><th>Doctor</th><th>Date</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+            @if (recent != null)
+            {
+                @foreach (var a in recent)
+                {
+                    <tr>
+                        <td>@a.Patient?.FullName</td>
+                        <td>@a.Doctor?.FullName</td>
+                        <td>@a.AppointmentDate.ToShortDateString() @a.AppointmentTime</td>
+                        <td><span class="badge bg-secondary">@a.Status</span></td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    <a class="btn btn-sm btn-primary" asp-controller="Appointments" asp-action="Index">View All Appointments</a>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+    <script>
+        new Chart(document.getElementById('statusChart'), {
+        type: 'pie',
+        data: {
+        labels: @Html.Raw(Json.Serialize(ViewBag.StatusLabels)),
+        datasets: [{
+        data: @Html.Raw(Json.Serialize(ViewBag.StatusData)),
+        backgroundColor: ['#f6c23e', '#1cc88a', '#4e73df', '#e74a3b']
+        }]
+        },
+        options: { plugins: { legend: { position: 'bottom' } } }
+        });
+
+        new Chart(document.getElementById('dailyChart'), {
+        type: 'bar',
+        data: {
+        labels: @Html.Raw(Json.Serialize(ViewBag.DailyLabels)),
+        datasets: [{
+        label: 'Appointments Booked',
+        data: @Html.Raw(Json.Serialize(ViewBag.DailyData)),
+        backgroundColor: '#2e59d9'
+        }]
+        },
+        options: {
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+        }
+        });
+    </script>
+}

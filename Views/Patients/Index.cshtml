@@ -1,0 +1,50 @@
+@model IEnumerable<Patient>
+@{
+    ViewData["Title"] = "Patients";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2><i class="fa-solid fa-user-injured"></i> Patients</h2>
+    <a class="btn btn-primary" asp-action="Create"><i class="fa-solid fa-plus"></i> Register Patient</a>
+</div>
+
+<form method="get" class="d-flex mb-3" style="max-width:350px;">
+    <input type="text" name="searchString" value="@ViewBag.CurrentFilter" class="form-control me-2" placeholder="Search by name or phone" />
+    <button type="submit" class="btn btn-outline-primary">Search</button>
+</form>
+
+<div class="card p-3">
+    <table class="table table-hover align-middle">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Phone</th>
+                <th>Registered On</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.FullName</td>
+                <td>@item.Age</td>
+                <td>@item.Gender</td>
+                <td>@item.Phone</td>
+                <td>@item.RegisteredOn.ToShortDateString()</td>
+                <td class="text-end">
+                    <a class="btn btn-sm btn-info text-white" asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-eye"></i></a>
+                    <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen"></i></a>
+                    <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash"></i></a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    @if (!Model.Any())
+    {
+        <p class="text-muted text-center mb-0">No patients found.</p>
+    }
+</div>
