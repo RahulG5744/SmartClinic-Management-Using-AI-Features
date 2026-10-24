@@ -3,9 +3,9 @@
     ViewData["Title"] = "Register Patient";
 }
 
-<h2><i class="fa-solid fa-user-plus"></i> Register New Patient</h2>
+<h2 class="text-center"><i class="fa-solid fa-user-plus"></i> Register New Patient</h2>
 
-<div class="card p-4 mt-3" style="max-width:700px;">
+<div class="card p-4 mt-3 mx-auto" style="max-width:700px;">
     <form asp-action="Create" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -50,8 +50,10 @@
             <textarea asp-for="MedicalHistory" class="form-control" rows="3"></textarea>
         </div>
 
-        <button type="submit" class="btn btn-primary">Save Patient</button>
-        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Save Patient</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </div>
     </form>
 </div>
 
