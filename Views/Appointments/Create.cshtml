@@ -3,9 +3,9 @@
     ViewData["Title"] = "Book Appointment";
 }
 
-<h2><i class="fa-solid fa-calendar-plus"></i> Book Appointment</h2>
+<h2 class="text-center"><i class="fa-solid fa-calendar-plus"></i> Book Appointment</h2>
 
-<div class="card p-4 mt-3" style="max-width:700px;">
+<div class="card p-4 mt-3 mx-auto" style="max-width:700px;">
     <form asp-action="Create" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -39,8 +39,10 @@
             <textarea asp-for="Reason" class="form-control" rows="3" placeholder="Briefly describe the reason for your visit"></textarea>
         </div>
 
-        <button type="submit" class="btn btn-warning">Book Appointment</button>
-        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        <div class="text-center">
+            <button type="submit" class="btn btn-warning">Book Appointment</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </div>
     </form>
 
     <div class="alert alert-light border mt-3 mb-0">
