@@ -23,9 +23,9 @@ namespace SmartClinicSystem.Models
         [Display(Name = "Phone Number")]
         public string Phone { get; set; } = string.Empty;
 
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "Please enter a valid email, e.g. name@example.com")]
         public string? Email { get; set; }
-
+        
         [StringLength(250)]
         public string? Address { get; set; }
 
